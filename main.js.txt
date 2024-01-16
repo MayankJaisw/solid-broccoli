@@ -1,0 +1,18 @@
+// public/main.js
+$(function () {
+  const socket = io();
+
+  $('form').submit(function(e){
+    e.preventDefault();
+    const message = $('#m').val();
+    if (message) {
+      socket.emit('chat message', message);
+      $('#m').val('');
+    }
+    return false;
+  });
+
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+});
